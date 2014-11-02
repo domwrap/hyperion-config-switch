@@ -1,5 +1,5 @@
 # WORK IN PROGRESS #
-These instructions are currently incomplete
+These instructions are currently incomplete, but if you already know how to setup a working cron on your Pi box, then the script is ready for use with compatible Pioneer AVR.
 
 hyperion-config-switch
 ======================
