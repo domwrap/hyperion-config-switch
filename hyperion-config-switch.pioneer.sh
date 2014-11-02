@@ -122,8 +122,8 @@ case "$avr_power" in
 			# http://www.pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/VSX-1120-K-RS232.PDF
 			case "$avr_input" in
 
-				# Input specific config file
-				"FN19" | "FN20")
+				# Input specific config file: What each of these correspond to can be found on the github readme/wiki
+				"FN05" | "FN01" | "FN03" | "FN04" | "FN19" | "FN05" | "FN00" | "FN03" | "FN26" | "FN15" | "FN05" | "FN10" | "FN14" | "FN19" | "FN20" | "FN21" | "FN22" | "FN23" | "FN24" | "FN25" | "FN17")
 					# My config
 					# FN19: Chromecast (HDMI1)
 					# FN20: Plex (HDMI2)
