@@ -123,7 +123,7 @@ case "$avr_power" in
 			case "$avr_input" in
 
 				# Input specific config file: What each of these correspond to can be found on the github readme/wiki
-				"FN05" | "FN01" | "FN03" | "FN04" | "FN19" | "FN05" | "FN00" | "FN03" | "FN26" | "FN15" | "FN05" | "FN10" | "FN14" | "FN19" | "FN20" | "FN21" | "FN22" | "FN23" | "FN24" | "FN25" | "FN17")
+				"FN00" | "FN01" | "FN03" | "FN04" | "FN05" | "FN10" | "FN14" | "FN15" | "FN17" | "FN19" | "FN20" | "FN21" | "FN22" | "FN23" | "FN24" | "FN25" | "FN26")
 					# My config
 					# FN19: Chromecast (HDMI1)
 					# FN20: Plex (HDMI2)
