@@ -95,8 +95,10 @@ Example:
 ln -s hyperion.config.json hyperion.config.FN20.json
 ````
 
+There is no need to restart the hyperion-config-switch.sh process. As long as the corresponding code was present in the avr.MANUF.conf src_custom section before loading, it will start using the file immediately.
 
 ## TODO
 
 - [ ] Create a system-dependant install script for all this crap
 - [ ] Document how to make script start at boot / with Hyperion
+- [ ] Add notes about how to kill/restrt process
