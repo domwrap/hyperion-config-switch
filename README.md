@@ -6,7 +6,7 @@ Scripts to switch Hyperion Ambilight config files based on external factors, suc
 
 ### Pioneer
 
-Initially I just have a config switching script for Pioneer network AVR series such as 82X, 102X, 112X and others compatible with IP commands as listed in [Pioneer Home Custom Install documentation]( http://www.pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/VSX-1120-K-RS232.PDF)
+Tested and working with Pioneer VSX-1028, but should work with all compatible series such as 82X, 102X, 112X and others compatible with IP commands as listed in [Pioneer Home Custom Install documentation]( http://www.pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/VSX-1120-K-RS232.PDF)
 
 **NOTE:** The Pioneer file is old so just because your AVR is not listed does not mean it is not supported. It is easy to test if you know the IP address of your AVR:
 
@@ -31,33 +31,36 @@ Connection closed by foreign host.
 Using the latter telnet command, if you don't get anything the first time just try a couple more times. The telnet responses are inconsistent for some reason.
 
 ### Denon
-To be implemented, **testers wanted**
+**Testers wanted**
+Codes in provided config file taken from this document
 http://openrb.com/wp-content/uploads/2012/02/AVR3312CI_AVR3312_PROTOCOL_V7.6.0.pdf
 
 ### Onkyo
-To be implemented, **testers wanted**
+**Testers wanted**
+Codes in provided config file taken from this document
 http://www.epanorama.net/sff/Audio/Products/Receivers/Onkyo%20-%20TXDS989-rs232-codes%5B1%5D.pdf
 
 ## Suggested Installation
 
 Move your existing config file and creating a symbolic link as the file Hyperion will look for. This makes it easier to switch scripts without anything getting overwritten.
 
-#### Raspbmc
+#### Raspbian / RaspBMC
 
 SSH to your Pi, then complete the following steps:
 
 ```
 cd
-mkdir hyperion-config-switch
+git clone https://github.com/Hwulex/hyperion-config-switch.git
+
 cd hyperion-config-switch/
 sudo mv /etc/hyperion.config.json hyperion.config.default.json
 ln -s hyperion.config.json hyperion.config.default.json
 ln -s /etc/hyperion.config.json hyperion.config.json
-
 initctl restart hyperion
-
-wget https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.sh
-
+```
+At this point you will want to open the `hyperion-config-switch.conf` file in your favourite editor and put in your AVR IP address, port, etc, and make sure the Raspbmc paths are configured correctly. Then:
+```
+ln -s avr.YOUR_AVR_MANUFACTURER.conf avr.conf
 ./hyperion-config-switch.sh &
 ```
 
@@ -74,11 +77,17 @@ killall hyperiond
 /storage/hyperion/bin/hyperiond.sh /storage/.config/hyperion.config.json </dev/null >/dev/null 2>&1 &
 
 curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.sh
-
+curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.conf
+curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/avr.YOUR_AVR_MANUFACTURER.conf
+```
+At this point you will want to open the `hyperion-config-switch.conf` file in your favourite editor and put in your AVR IP address, port, etc, and make sure the Raspbmc paths are configured correctly. Then:
+```
+ln -s avr.YOUR_AVR_MANUFACTURER.conf avr.conf
 ./hyperion-config-switch.sh &
 ```
 
 
 ## TODO
 
-Create a system-dependant install script for all this crap
+- [ ] Create a system-dependant install script for all this crap
+- [ ] Document how to make script start at boot / with Hyperion
