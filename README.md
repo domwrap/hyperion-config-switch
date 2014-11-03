@@ -86,6 +86,15 @@ ln -s avr.YOUR_AVR_MANUFACTURER.conf avr.conf
 ./hyperion-config-switch.sh &
 ```
 
+## Per-Input Configuration
+
+If you wish (or need) to run different Hyperion configurations for different AVR inputs (different black crops, colour casting, etc) then that is very easy. Simply copy the default hyperion.config.json file to another with the name of the corresponding AVR input code inserted. Next, ensure it is also listed in the avr.MANUF.conf file under `src_custom` and you're reading to go.
+
+Example:
+````
+ln -s hyperion.config.json hyperion.config.FN20.json
+````
+
 
 ## TODO
 
