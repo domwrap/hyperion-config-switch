@@ -11,6 +11,9 @@
 # Here be where you config yo stuff
 ##############################################
 #
+# IP address or hostname of AVR
+avr_ip="10.0.0.119"
+#
 #OpenElec/RasPlex
 #path_remote="/storage/hyperion/bin/hyperion-remote.sh"
 #path_config="/storage/hyperion/config/"
@@ -46,11 +49,11 @@ log="/var/log/hyperion-config-switch.log"
 
 
 # Query current power state of AVR
-avr_power=`printf "?P\r" | nc -w 1 10.0.0.119 23 | head -c4`
+avr_power=`printf "?P\r" | nc -w 1 $avr_ip 23 | head -c4`
 # Pioneer states minimum 100ms between power on and subsequent requests
 sleep 0.2
 # Query current input for AVR
-avr_input=`printf "?F\r" | nc -w 1 10.0.0.119 23 | head -c4`
+avr_input=`printf "?F\r" | nc -w 1 $avr_ip 23 | head -c4`
 # Pull in config-saved previous state of AVR. Supress output in case doesn't already exist
 if [ -e $config ]
 then
