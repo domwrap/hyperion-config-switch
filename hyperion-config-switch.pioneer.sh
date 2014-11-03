@@ -38,7 +38,7 @@ off_duration=2500
 # POWER=1 (or 0) which is actually inverted to what you might expect
 # INPUT=19FN (etc)
 config="/tmp/hyperion-config-switch.cfg"
-log="/tmp/hyperion-config-switch.log"
+log="/var/log/hyperion-config-switch.log"
 #
 ##############################################
 
