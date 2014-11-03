@@ -2,7 +2,7 @@
 # Script to switch configuration files and to turn
 # Hyperion LEDs on and off dependent on Network AVR
 # (such as Pioneer 1X2X series, Onkyo, and Denon)
-# Author: Dominic Wrapson <hwulex@gmail.com>
+# Author: Dominic Wrapson, aka Hwulex
 # License: The MIT License (MIT)
 # http://choosealicense.com/licenses/mit/
 
