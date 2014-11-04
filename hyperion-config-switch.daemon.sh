@@ -118,6 +118,7 @@ off_sleep=$(((off_duration+1000)/1000))
 
 							# Input specific config availability, otherwise will default
 							if [[ "$line" =~ "$src_custom" ]]
+							then
 								# Check to see if a valid config file for switched input actually exists
 								if [ -e "${path_config}hyperion.config.${line}.json" ]
 								then
