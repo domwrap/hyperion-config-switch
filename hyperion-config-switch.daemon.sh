@@ -27,7 +27,6 @@ source "$avrconf" &> /dev/null
 
 # Remote durations are in miliseconds but bash sleeps in seconds so do some conversion
 off_sleep=$(((off_duration+1000)/1000))
-on_sleep=$(((on_duration+1000)/1000))
 
 {
 	echo "[$(date "+%F %T")] Starting loop"
