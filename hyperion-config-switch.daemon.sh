@@ -34,7 +34,7 @@ on_sleep=$(((off_duration+1000)/1000))
 	do
 		echo "[$(date "+%F %T")] Starting $avr_transport"
 
-		$avr_transport $avr_ip $avr_port | while read event
+		$avr_transport $avr_ip $avr_port | tr "$avr_separator" "\n" | while read event
 		do
 			match=$(echo "$event" | grep -c "^$src_prefix\|$pwr_prefix")
 			if [ "$match" -eq 1 ]; then
