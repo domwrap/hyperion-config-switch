@@ -13,21 +13,20 @@ set -u
 # Check for and load config
 config="hyperion-config-switch.conf"
 if [ ! -e "$config" ]; then
-	echo "Fatal error: Config file not found"
+	echo "Fatal error: Script config file not found"
 fi
 source "$config" &> /dev/null
 
 # Check for and load AVR parameters
 avrconf="avr.conf"
 if [ ! -e "$avrconf" ]; then
-	echo "Fatal error: Config file not found"
+	echo "Fatal error: AVR config file not found"
 fi
 source "$avrconf" &> /dev/null
 
-
 # Remote durations are in miliseconds but bash sleeps in seconds so do some conversion
 off_sleep=$(((off_duration+1000)/1000))
-
+# Kick things off
 {
 	echo "[$(date "+%F %T")] Starting loop"
 
@@ -35,12 +34,12 @@ off_sleep=$(((off_duration+1000)/1000))
 	do
 		echo "[$(date "+%F %T")] Starting netcat"
 
-		nc $avr_ip $avr_port | while read line
+		nc $avr_ip $avr_port | while read event
 		do
-            match=$(echo "$line" | grep -c "^$src_prefix\|$pwr_prefix")
+			match=$(echo "$event" | grep -c "^$src_prefix\|$pwr_prefix")
 			if [ "$match" -eq 1 ]; then
 				# clean the input
-				line=${line//[^a-zA-Z0-9]/}
+				event={$event}//[^a-zA-Z0-9]/}
 
 				# Pull in config-saved previous state of AVR. Supress output in case doesn't already exist
 				if [ ! -e $tmp ]
@@ -55,13 +54,13 @@ off_sleep=$(((off_duration+1000)/1000))
 				echo "[$(date "+%F %T")] Setting POWER=$POWER"
 
 				# Switch dependant on reult of power-query
-				# case "${line:0:2}:$line" in
-				case "$line" in
-				# case "$(echo $line|head -c2)" in
+				# case "{$event}:0:2}:$event" in
+				case "$event" in
+				# case "$(echo $event|head -c2)" in
 
 					# power is off
 					"$pwr_off")
-						echo "[$(date "+%F %T")] Power state changed: $line"
+						echo "[$(date "+%F %T")] Power state changed: $event"
 
 						# Visual effect, if wanted, to confirm power off
 						# Remember 1 is off, 0 is on
@@ -83,7 +82,7 @@ off_sleep=$(((off_duration+1000)/1000))
 
 					# power is on!
 					"$pwr_on")
-						echo "[$(date "+%F %T")] Power state changed: $line"
+						echo "[$(date "+%F %T")] Power state changed: $event"
 
 						# Remove the channel block by clearing selected channel
 						# Again suggested by tvdzwan, see above for link
@@ -105,26 +104,26 @@ off_sleep=$(((off_duration+1000)/1000))
 
 					# Invalid option, query or result must have failed
 					"$pwr_prefix"*)
-						echo "[$(date "+%F %T")] Power detection failed. Invalid option: $line"
+						echo "[$(date "+%F %T")] Power detection failed. Invalid option: $event"
 						;;
 
 					# Input specific config file: What each of these correspond to can be found on the github readme/wiki
 					"$src_prefix"*)
 
 						# Read previous input of amp from last query and see if changed, otherwise don't bother
-						if [ "$line" != "$INPUT" ]
+						if [ "$event" != "$INPUT" ]
 						then
-							echo "[$(date "+%F %T")] Input changed: $line"
+							echo "[$(date "+%F %T")] Input changed: $event"
 
 							# Input specific config availability, otherwise will default
-							if [[ "$line" =~ "$src_custom" ]]
+							if [[ "$event" =~ "$src_custom" ]]
 							then
 								# Check to see if a valid config file for switched input actually exists
-								if [ -e "${path_config}hyperion.config.${line}.json" ]
+								if [ -e "${path_config}hyperion.config.{$event}}.json" ]
 								then
 									# Change config file to input-specific one
-									echo "[$(date "+%F %T")] Switching to $line config file"
-									new_config="${path_config}hyperion.config.$line.json"
+									echo "[$(date "+%F %T")] Switching to $event config file"
+									new_config="${path_config}hyperion.config.$event.json"
 								else
 									# Input is setup but config file is not found, default it
 									echo "[$(date "+%F %T")] Input specific config file not found, switching to default"
@@ -151,12 +150,12 @@ off_sleep=$(((off_duration+1000)/1000))
 
 						# Write current input to config for next check
 						echo POWER=$POWER > $tmp
-						echo INPUT=$line >> $tmp
+						echo INPUT=$event >> $tmp
 						;;
 
 					# Nothing matched, somehow something unrecognised slipped through
 					*)
-						echo "[$(date "+%F %T")] Bad request, unsupported AVR code: $line"
+						echo "[$(date "+%F %T")] Bad request, unsupported AVR code: $event"
 						;;
 
 				esac
