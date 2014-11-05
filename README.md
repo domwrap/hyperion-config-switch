@@ -16,8 +16,7 @@ Example codes for testing are listed below for known manufacturer specifications
 - Replace `avr.ipa.ddr.ess` and `port` with values for your AVR. In most cases the default port of 23 will work. On my Pioneer port 8102 is also open.
 
 
-`printf "EVENT\r" | nc avr.ipa.ddr.ess port -w 1`
-Returning `EVENT`
+`printf "EVENT\r" | nc avr.ipa.ddr.ess port -w 1` returns `EVENT`
 
 or
 
