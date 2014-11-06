@@ -69,7 +69,7 @@ If you have one of the three listed manufs and the codes didn't work, or if you 
 
 In a terminal, type one of the following followed by the ENTER key:
 
-`nc avr.ipa.ddr.ess port` or `telnet avr.ipa.ddr.ess port
+`nc avr.ipa.ddr.ess port` or `telnet avr.ipa.ddr.ess port`
 
 Power on your AVR, if not already, and change volume, switch inputs, etc. Hopefully you will see a stream of event codes appearing in the terminal window. By monitoring the output you should be able to see commonalities with repeat behaviours and manage to map what you are doing on the AVR (input, power, volume) to the corresponding codes which you can then use in a config file with this script.
 
