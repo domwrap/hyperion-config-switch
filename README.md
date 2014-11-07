@@ -87,17 +87,23 @@ git clone https://github.com/Hwulex/hyperion-config-switch.git
 
 cd hyperion-config-switch/
 chmod a+x hyperion-config-switch.daemon.sh
-sudo mv /etc/hyperion.config.json hyperion.config.default.json
+cd /opt/hyperion/config/
+sudo mv hyperion.config.json hyperion.config.default.json
 ln -s hyperion.config.default.json hyperion.config.json
-sudo ln -s hyperion.config.json /etc/hyperion.config.json
 initctl restart hyperion
 ```
 The final command may need to be run as `sudo /etc/init.d/hyperion restart`
 
-At this point you will want to open the `hyperion-config-switch.conf` file in your favourite editor and put in your AVR IP address, port, etc, and make sure the Raspbmc paths are configured correctly. Then:
+At this point you will want to
+
+- edit the `hyperion-config-switch.conf` and make sure all paths are configured correctly for your platform, and
+- edit the `hyperion.avr.conf` file and put in your AVR IP address and port
+
+Then
 ```
-ln -s avr.YOUR_AVR_MANUFACTURER.conf avr.conf
-./hyperion-config-switch.sh &
+cd ~/hyperion-config-switch
+ln -s avr.YOUR_AVR_MANUFACTURER.conf hyperion.avr.conf
+sudo ./hyperion-config-switch.daemon.sh &
 ```
 
 #### OpenELEC / RasPlex
@@ -119,13 +125,14 @@ chmod a+x hyperion-config-switch.pioneer.sh
 ```
 At this point you will want to open the `hyperion-config-switch.conf` file in your favourite editor and put in your AVR IP address, port, etc, and make sure the Raspbmc paths are configured correctly. Then:
 ```
-ln -s avr.YOUR_AVR_MANUFACTURER.conf avr.conf
-./hyperion-config-switch.sh &
+cd ~/hyperion-config-switch
+ln -s avr.YOUR_AVR_MANUFACTURER.conf hyperion.avr.conf
+./hyperion-config-switch.daemon.sh &
 ```
 
 ## Per-Input Configuration
 
-If you wish (or need) to run different Hyperion configurations for different AVR inputs (different black crops, colour casting, etc) then that is very easy. Simply copy the default hyperion.config.json file to another with the name of the corresponding AVR input code inserted. Next, ensure it is also listed in the `avr.MANUF.conf` file under `src_custom` and you're reading to go.
+If you wish (or need) to run different Hyperion configurations for different AVR inputs (different black crops, colour casting, etc) then that is very easy. Simply copy the default hyperion.config.json file to another with the name of the corresponding AVR input code inserted, within your Hyperion conf directory (see instructions above). Next, ensure it is also listed in the `avr.MANUF.conf` file under `src_custom` and you're reading to go.
 
 Example:
 ````
@@ -134,6 +141,21 @@ cp hyperion.config.json hyperion.config.FN20.json
 Where FN20 is the HDMI2 input on my Pioneer AVR. Find the code for your input using the linked documents for your manufacturer and substitute in to these commands.
 
 There is no need to restart the hyperion-config-switch.sh process. As long as the corresponding code was present in the avr.MANUF.conf src_custom section before loading, it will start using the file immediately.
+
+
+## Killing the Switcher
+
+If you need to kill the switch script, run
+
+Raspbian:
+
+`sudo killall -9 hyperion-config-switch.daemon.sh`
+
+OpenELEC:
+
+`killall -9 hyperion-config-switch.daemon.sh`
+
+
 
 
 ## TODO
