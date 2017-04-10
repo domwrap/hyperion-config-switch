@@ -103,7 +103,7 @@ Then
 ```
 cd ~/hyperion-config-switch
 ln -s avr.YOUR_AVR_MANUFACTURER.conf hyperion.avr.conf
-sudo ./hyperion-config-switch.daemon.sh &
+sudo nohup ./hyperion-config-switch.daemon.sh &
 ```
 
 #### OpenELEC / RasPlex
@@ -135,7 +135,7 @@ ln -s avr.YOUR_AVR_MANUFACTURER.conf hyperion.avr.conf
 At this point you will want to open `hyperion.avr.conf` in your favourite editor and put in your AVR IP address, port, etc.
 Next, edit `hyperion-config-switch.conf` and make sure the paths are configured correctly for your system. Then:
 ```
-./hyperion-config-switch.daemon.sh &
+nohup ./hyperion-config-switch.daemon.sh &
 ```
 
 ## Per-Input Configuration
