@@ -126,7 +126,7 @@ cd hyperion-config-switch
 killall hyperiond
 /storage/hyperion/bin/hyperiond.sh /storage/.config/hyperion.config.json </dev/null >/dev/null 2>&1 &
 
-curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.daemon.sh
+curl -L --output hyperion-config-switch.daemon.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.daemon.sh
 curl -L --output hyperion-config-switch.conf --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.conf
 curl -L --output avr.YOUR_AVR_MANUFACTURER.conf --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/avr.YOUR_AVR_MANUFACTURER.conf
 chmod a+x hyperion-config-switch.daemon.sh
