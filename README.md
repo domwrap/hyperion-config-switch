@@ -111,6 +111,10 @@ sudo ./hyperion-config-switch.daemon.sh &
 SSH as **root** to your installation using `ssh root@box.ip.add.ress`. The default passwords are _openelec_ and _rasplex_ for the respective installs. Now complete the following steps
 
 ```
+cd /storage/.config/
+mv hyperion.config.json /storage/hyperion/config/
+ln -s /storage/hyperion/config/hyperion.config.json hyperion.config.json
+
 cd /storage/hyperion/config/
 mv hyperion.config.json hyperion.config.default.json
 ln -s hyperion.config.default.json hyperion.config.json
@@ -119,8 +123,8 @@ killall hyperiond
 /storage/hyperion/bin/hyperiond.sh /storage/.config/hyperion.config.json </dev/null >/dev/null 2>&1 &
 
 curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.sh
-curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.conf
-curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/avr.YOUR_AVR_MANUFACTURER.conf
+curl -L --output hyperion-config-switch.pioneer.conf --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.conf
+curl -L --output avr.YOUR_AVR_MANUFACTURER.conf --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/avr.YOUR_AVR_MANUFACTURER.conf
 chmod a+x hyperion-config-switch.pioneer.sh
 ```
 At this point you will want to open the `hyperion-config-switch.conf` file in your favourite editor and put in your AVR IP address, port, etc, and make sure the Raspbmc paths are configured correctly. Then:
