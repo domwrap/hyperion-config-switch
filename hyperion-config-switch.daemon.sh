@@ -64,7 +64,7 @@ on_sleep=$(((off_duration+1000)/1000))
 						# Remember 1 is off, 0 is on
 						if [ "0" = "$POWER" ] && [ -n "$path_remote" ]; then
 							echo "[$(date "+%F %T")] AVR powered off: $off_effect"
-							`${path_remote} --effect "${off_effect}" --duration ${off_duration} &`
+							eval "${path_remote} --effect "\""${off_effect}"\"" --duration ${off_duration} &"
 							sleep $off_sleep
 						fi
 
