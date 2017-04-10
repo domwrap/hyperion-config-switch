@@ -28,6 +28,10 @@ off_sleep=$(((off_duration+1000)/1000))
 on_sleep=$(((off_duration+1000)/1000))
 # Kick things off
 {
+	echo "[$(date "+%F %T")] Setup"
+	mkfifo dummy > /dev/null 2>&1
+	touch dummy.txt
+
 	echo "[$(date "+%F %T")] Starting loop"
 
 	while :
@@ -35,7 +39,7 @@ on_sleep=$(((off_duration+1000)/1000))
 		echo "[$(date "+%F %T")] Starting $script_transport"
 
 		# $script_transport $avr_ip $avr_port | tr "$avr_separator" "\n" | while read event
-		$script_transport $avr_ip $avr_port | while IFS="$avr_separator" read event
+		cat dummy.txt dummy | $script_transport $avr_ip $avr_port | while IFS="$avr_separator" read event
 		do
 			match=$(echo "$event" | grep -c "^$src_prefix\|$pwr_prefix")
 			if [ "$match" -eq 1 ]; then
