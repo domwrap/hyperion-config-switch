@@ -119,17 +119,21 @@ cd /storage/hyperion/config/
 mv hyperion.config.json hyperion.config.default.json
 ln -s hyperion.config.default.json hyperion.config.json
 
+cd /storage
+mkdir hyperion-config-switch
+cd hyperion-config-switch
+
 killall hyperiond
 /storage/hyperion/bin/hyperiond.sh /storage/.config/hyperion.config.json </dev/null >/dev/null 2>&1 &
 
-curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.pioneer.sh
+curl -L --output hyperion-config-switch.sh --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.daemon.sh
 curl -L --output hyperion-config-switch.conf --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/hyperion-config-switch.conf
 curl -L --output avr.YOUR_AVR_MANUFACTURER.conf --get https://raw.githubusercontent.com/Hwulex/hyperion-config-switch/master/avr.YOUR_AVR_MANUFACTURER.conf
-chmod a+x hyperion-config-switch.pioneer.sh
+chmod a+x hyperion-config-switch.daemon.sh
 ```
 At this point you will want to open the `hyperion-config-switch.conf` file in your favourite editor and put in your AVR IP address, port, etc, and make sure the Raspbmc paths are configured correctly. Then:
 ```
-cd ~/hyperion-config-switch
+cd /storage/hyperion-config-switch
 ln -s avr.YOUR_AVR_MANUFACTURER.conf hyperion.avr.conf
 ./hyperion-config-switch.daemon.sh &
 ```
