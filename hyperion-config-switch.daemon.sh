@@ -68,13 +68,13 @@ on_sleep=$(((off_duration+1000)/1000))
 						# Remember 1 is off, 0 is on
 						if [ "0" = "$POWER" ] && [ -n "$path_remote" ]; then
 							echo "[$(date "+%F %T")] AVR powered off: $off_effect"
-							eval "${path_remote} --effect "\""${off_effect}"\"" --duration ${off_duration} &"
+							eval "${path_remote} --effect "\""${off_effect}"\"" --duration ${off_duration} > /dev/null 2>&1 &"
 							sleep $off_sleep
 						fi
 
 						# Sending black at a low channel (zero) effectively switching off leds
 						# suggestion from tvdzwan (https://github.com/tvdzwan/hyperion/issues/177#issuecomment-58793948)
-						eval "$path_remote --priority 0 --color black"
+						eval "$path_remote --priority 0 --color black > /dev/null 2>&1"
 
 						# Save (backward) power state to config file
 						echo POWER=1 > $tmp
@@ -87,7 +87,7 @@ on_sleep=$(((off_duration+1000)/1000))
 
 						# Remove the channel block by clearing selected channel
 						# Again suggested by tvdzwan, see above for link
-						eval "$path_remote --priority 0 --clear"
+						eval "$path_remote --priority 0 --clear > /dev/null 2>&1"
 
 						# Trigger an effect here, if you like, as visual confirmation  we're back
 						# Remember 1 is off, 0 is on
